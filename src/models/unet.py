@@ -1,7 +1,7 @@
 # src/models/unet.py
 import torch
 import torch.nn as nn
-import torchvision.transforms.functional as TF
+import torch.nn.functional as F
 
 class DoubleConv(nn.Module):
     def __init__(self, in_channels: int, out_channels: int):
@@ -21,9 +21,12 @@ class DoubleConv(nn.Module):
 
 
 class UNet(nn.Module):
-    def __init__(self, in_channels=3, out_channels=1, features=[64, 128, 256, 512]):
+    def __init__(self, in_channels=3, out_channels=1, features=None):
         super().__init__()
 
+        if features is None:
+            features = [64, 128, 256, 512]
+        
         self.ups = nn.ModuleList()
         self.downs = nn.ModuleList()
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
@@ -68,7 +71,7 @@ class UNet(nn.Module):
 
             # Safety check for shape mismatch
             if x.shape[2:] != skip_connection.shape[2:]:
-                x = TF.resize(x, size=skip_connection.shape[2:])
+                x = F.interpolate(x, size=skip_connection.shape[2:], mode="bilinear", align_corners=False)
 
             concat_skip = torch.cat((skip_connection, x), dim=1)
             x = self.ups[idx + 1](concat_skip)

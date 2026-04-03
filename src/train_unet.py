@@ -3,10 +3,10 @@ import torch
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader
-from dataset import get_image_mask_pairs, ECSSDDataset
-from metrics import binarize_predictions, compute_batch_metrics, initialize_metric_sums, update_metric_sums, average_metric_sums, compute_precision_recall_curve
-from models.unet import UNet
-from utils import set_seed, ensure_dir, save_pr_curve_plot
+from src.dataset import get_image_mask_pairs, ECSSDDataset
+from src.metrics import binarize_predictions, compute_batch_metrics, initialize_metric_sums, update_metric_sums, average_metric_sums, compute_precision_recall_curve
+from src.models.unet import UNet
+from src.utils import set_seed, ensure_dir, save_pr_curve_plot
 
 
 def train_one_epoch(model, loader, optimizer, criterion, device):
@@ -14,8 +14,8 @@ def train_one_epoch(model, loader, optimizer, criterion, device):
     total_loss = 0.0
 
     for images, masks in loader:
-        images = images.to(device)
-        masks = masks.to(device)
+        images = images.to(device, non_blocking=True)
+        masks = masks.to(device, non_blocking=True)
 
         optimizer.zero_grad()
 
@@ -37,8 +37,8 @@ def evaluate_one_epoch(model, loader, criterion, device):
     metric_sums = initialize_metric_sums()
 
     for images, masks in loader:
-        images = images.to(device)
-        masks = masks.to(device)
+        images = images.to(device, non_blocking=True)
+        masks = masks.to(device, non_blocking=True)
 
         logits = model(images)
         loss = criterion(logits, masks)
@@ -95,9 +95,9 @@ def main():
     test_dataset = ECSSDDataset(test_pairs, image_size=IMAGE_SIZE)
 
     # DataLoaders
-    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
+    train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2, pin_memory=torch.cuda.is_available())
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, pin_memory=torch.cuda.is_available())
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2, pin_memory=torch.cuda.is_available())
 
     # Model, Loss, Optimizer
     model = UNet(in_channels=3, out_channels=1).to(device)
