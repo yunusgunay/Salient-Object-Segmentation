@@ -1,7 +1,8 @@
 # src/dataset.py
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from PIL import Image
+
 from torch.utils.data import Dataset
 from torchvision import transforms
 from torchvision.transforms import InterpolationMode
@@ -43,14 +44,25 @@ def get_image_mask_pairs(images_dir: str, masks_dir: str) -> List[Tuple[Path, Pa
 
 
 class ECSSDDataset(Dataset):
-    def __init__(self, pairs: List[Tuple[Path, Path]], image_size: Tuple[int, int] = (256, 256)) -> None:
+    def __init__(
+        self,
+        pairs: List[Tuple[Path, Path]],
+        image_size: Tuple[int, int] = (256, 256),
+        normalize_mean: Optional[Tuple[float, float, float]] = None,
+        normalize_std: Optional[Tuple[float, float, float]] = None,
+    ) -> None:
         self.pairs = pairs
         self.image_size = image_size
 
-        self.image_transform = transforms.Compose([
+        image_transform_steps = [
             transforms.Resize(image_size, interpolation=InterpolationMode.BILINEAR),
             transforms.ToTensor(),
-        ])
+        ]
+
+        if normalize_mean is not None and normalize_std is not None:
+            image_transform_steps.append(transforms.Normalize(mean=normalize_mean, std=normalize_std))
+        
+        self.image_transform = transforms.Compose(image_transform_steps)
 
         self.mask_transform = transforms.Compose([
             transforms.Resize(image_size, interpolation=InterpolationMode.NEAREST),
