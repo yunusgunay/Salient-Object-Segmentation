@@ -1,0 +1,35 @@
+Using device: cuda
+Matched pairs: 1000
+Train samples: 700
+Val samples: 150
+Test samples: 150
+model.safetensors: 100% 86.7M/86.7M [00:03<00:00, 28.7MB/s]
+Epoch [1/10] | Train Loss: 0.4735 | Val Loss: 0.3323 | Val IoU: 0.7639 | Val Dice: 0.8608 | Val Precision: 0.8547 | Val Recall: 0.8861 | Val F-measure: 0.8608
+Saved best model to outputs/checkpoints/dino_best_model.pth
+Epoch [2/10] | Train Loss: 0.3024 | Val Loss: 0.2623 | Val IoU: 0.7790 | Val Dice: 0.8697 | Val Precision: 0.8418 | Val Recall: 0.9195 | Val F-measure: 0.8697
+Saved best model to outputs/checkpoints/dino_best_model.pth
+Epoch [3/10] | Train Loss: 0.2243 | Val Loss: 0.2157 | Val IoU: 0.7920 | Val Dice: 0.8778 | Val Precision: 0.8542 | Val Recall: 0.9203 | Val F-measure: 0.8778
+Saved best model to outputs/checkpoints/dino_best_model.pth
+Epoch [4/10] | Train Loss: 0.1739 | Val Loss: 0.1878 | Val IoU: 0.7966 | Val Dice: 0.8804 | Val Precision: 0.8802 | Val Recall: 0.8970 | Val F-measure: 0.8804
+Saved best model to outputs/checkpoints/dino_best_model.pth
+Epoch [5/10] | Train Loss: 0.1370 | Val Loss: 0.1651 | Val IoU: 0.8056 | Val Dice: 0.8864 | Val Precision: 0.8776 | Val Recall: 0.9100 | Val F-measure: 0.8864
+Saved best model to outputs/checkpoints/dino_best_model.pth
+Epoch [6/10] | Train Loss: 0.1076 | Val Loss: 0.1568 | Val IoU: 0.8051 | Val Dice: 0.8864 | Val Precision: 0.8879 | Val Recall: 0.8990 | Val F-measure: 0.8864
+Epoch [7/10] | Train Loss: 0.0901 | Val Loss: 0.1503 | Val IoU: 0.8014 | Val Dice: 0.8841 | Val Precision: 0.8812 | Val Recall: 0.9010 | Val F-measure: 0.8841
+Epoch [8/10] | Train Loss: 0.0778 | Val Loss: 0.1511 | Val IoU: 0.8037 | Val Dice: 0.8854 | Val Precision: 0.8748 | Val Recall: 0.9115 | Val F-measure: 0.8854
+Epoch [9/10] | Train Loss: 0.0679 | Val Loss: 0.1491 | Val IoU: 0.8036 | Val Dice: 0.8854 | Val Precision: 0.8802 | Val Recall: 0.9048 | Val F-measure: 0.8854
+Epoch [10/10] | Train Loss: 0.0641 | Val Loss: 0.1524 | Val IoU: 0.7980 | Val Dice: 0.8819 | Val Precision: 0.8768 | Val Recall: 0.9017 | Val F-measure: 0.8819
+
+Training finished.
+
+Loading best model for final test evaluation...
+
+Final Test Results
+Test Loss: 0.1620
+Test IoU: 0.7864
+Test Dice: 0.8721
+Test Precision: 0.8627
+Test Recall: 0.8999
+Test F-measure: 0.8721
+Saved Precision-Recall curve to outputs/predictions/dino_pr_curve.png
+PR AUC: 0.9578
