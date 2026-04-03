@@ -1,0 +1,34 @@
+Using device: cpu
+Matched pairs: 1000
+Train samples: 700
+Val samples: 150
+Test samples: 150
+Epoch [1/10] | Train Loss: 0.5771 | Val Loss: 0.5638 | Val IoU: 0.0000 | Val Dice: 0.0000 | Val Precision: 0.0000 | Val Recall: 0.0000 | Val F-measure: 0.0000
+Saved best model to outputs/checkpoints/cnn_best_model.pth
+Epoch [2/10] | Train Loss: 0.5365 | Val Loss: 0.5574 | Val IoU: 0.0000 | Val Dice: 0.0000 | Val Precision: 0.0000 | Val Recall: 0.0000 | Val F-measure: 0.0000
+Epoch [3/10] | Train Loss: 0.5299 | Val Loss: 0.5526 | Val IoU: 0.0000 | Val Dice: 0.0000 | Val Precision: 0.0000 | Val Recall: 0.0000 | Val F-measure: 0.0000
+Epoch [4/10] | Train Loss: 0.5241 | Val Loss: 0.5467 | Val IoU: 0.0000 | Val Dice: 0.0000 | Val Precision: 0.0000 | Val Recall: 0.0000 | Val F-measure: 0.0000
+Epoch [5/10] | Train Loss: 0.5181 | Val Loss: 0.5640 | Val IoU: 0.0008 | Val Dice: 0.0015 | Val Precision: 0.0906 | Val Recall: 0.0008 | Val F-measure: 0.0015
+Saved best model to outputs/checkpoints/cnn_best_model.pth
+Epoch [6/10] | Train Loss: 0.5058 | Val Loss: 0.5434 | Val IoU: 0.0372 | Val Dice: 0.0529 | Val Precision: 0.2633 | Val Recall: 0.0377 | Val F-measure: 0.0529
+Saved best model to outputs/checkpoints/cnn_best_model.pth
+Epoch [7/10] | Train Loss: 0.4935 | Val Loss: 0.5075 | Val IoU: 0.0726 | Val Dice: 0.1068 | Val Precision: 0.5495 | Val Recall: 0.0780 | Val F-measure: 0.1068
+Saved best model to outputs/checkpoints/cnn_best_model.pth
+Epoch [8/10] | Train Loss: 0.4874 | Val Loss: 0.5027 | Val IoU: 0.0861 | Val Dice: 0.1252 | Val Precision: 0.5617 | Val Recall: 0.0953 | Val F-measure: 0.1252
+Saved best model to outputs/checkpoints/cnn_best_model.pth
+Epoch [9/10] | Train Loss: 0.4874 | Val Loss: 0.5056 | Val IoU: 0.0617 | Val Dice: 0.0881 | Val Precision: 0.4785 | Val Recall: 0.0644 | Val F-measure: 0.0881
+Epoch [10/10] | Train Loss: 0.4754 | Val Loss: 0.5158 | Val IoU: 0.0731 | Val Dice: 0.1043 | Val Precision: 0.4363 | Val Recall: 0.0779 | Val F-measure: 0.1043
+
+Training finished.
+
+Loading best model for final test evaluation...
+
+Final Test Results
+Test Loss: 0.4691
+Test IoU: 0.0985
+Test Dice: 0.1393
+Test Precision: 0.5261
+Test Recall: 0.1144
+Test F-measure: 0.1393
+Saved Precision-Recall curve to outputs/predictions/cnn_pr_curve.png
+PR AUC: 0.4341
