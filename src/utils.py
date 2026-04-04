@@ -40,5 +40,6 @@ def save_loss_curve_plot(train_losses, val_losses, save_path: str):
     plt.title("Training vs. Validation Loss")
     plt.legend()
     plt.grid(True)
+    plt.tight_layout()
     plt.savefig(save_path, bbox_inches="tight")
     plt.close()
