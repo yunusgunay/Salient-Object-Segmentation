@@ -28,3 +28,17 @@ def save_pr_curve_plot(recall, precision, pr_auc,save_path: str):
     plt.grid(True)
     plt.savefig(save_path, bbox_inches="tight")
     plt.close()
+
+
+def save_loss_curve_plot(train_losses, val_losses, save_path: str):
+    epochs = range(1, len(train_losses) + 1)
+    plt.figure()
+    plt.plot(epochs, train_losses, label="Train Loss")
+    plt.plot(epochs, val_losses, label="Validation Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Training vs. Validation Loss")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()

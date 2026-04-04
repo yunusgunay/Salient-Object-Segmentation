@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 from src.dataset import get_image_mask_pairs, ECSSDDataset
 from src.metrics import binarize_predictions, compute_batch_metrics, initialize_metric_sums, update_metric_sums, average_metric_sums, compute_precision_recall_curve
 from src.models.cnn import CNNAutoencoder
-from src.utils import set_seed, ensure_dir, save_pr_curve_plot
+from src.utils import set_seed, ensure_dir, save_pr_curve_plot, save_loss_curve_plot
 
 
 def train_one_epoch(model, loader, optimizer, criterion, device):
@@ -59,7 +59,7 @@ def main():
     # Configurations
     SEED = 42
     IMAGE_SIZE = (256, 256)
-    BATCH_SIZE = 8
+    BATCH_SIZE = 16
     NUM_EPOCHS = 10
     LEARNING_RATE = 1e-3
 
@@ -70,6 +70,7 @@ def main():
     prediction_dir = "outputs/predictions"
     best_model_path = f"{checkpoint_dir}/cnn_best_model.pth"
     pr_curve_path = f"{prediction_dir}/cnn_pr_curve.png"
+    loss_curve_path = f"{prediction_dir}/cnn_loss_curve.png"
 
     # Setup
     set_seed(SEED)
@@ -106,10 +107,15 @@ def main():
 
     # Training loop
     best_val_dice = -1.0
+    train_losses = []
+    val_losses = []
 
     for epoch in range(NUM_EPOCHS):
         train_loss = train_one_epoch(model, train_loader, optimizer, criterion, device)
         val_loss, val_metrics = evaluate_one_epoch(model, val_loader, criterion, device)
+
+        train_losses.append(train_loss)
+        val_losses.append(val_loss)
 
         print(
             f"Epoch [{epoch + 1}/{NUM_EPOCHS}] | "
@@ -127,7 +133,9 @@ def main():
             best_val_dice = val_metrics["dice"]
             torch.save(model.state_dict(), best_model_path)
             print(f"Saved best model to {best_model_path}")
-    
+
+    save_loss_curve_plot(train_losses, val_losses, loss_curve_path)
+    print(f"\nSaved loss curve to {loss_curve_path}")
     print("\nTraining finished.")
 
     # Final test evaluation with best model
