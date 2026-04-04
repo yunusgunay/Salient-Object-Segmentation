@@ -3,7 +3,8 @@ Matched pairs: 1000
 Train samples: 700
 Val samples: 150
 Test samples: 150
-model.safetensors: 100% 86.7M/86.7M [00:03<00:00, 28.7MB/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+model.safetensors: 100% 86.7M/86.7M [00:03<00:00, 25.3MB/s]
 Epoch [1/10] | Train Loss: 0.4735 | Val Loss: 0.3323 | Val IoU: 0.7639 | Val Dice: 0.8608 | Val Precision: 0.8547 | Val Recall: 0.8861 | Val F-measure: 0.8608
 Saved best model to outputs/checkpoints/dino_best_model.pth
 Epoch [2/10] | Train Loss: 0.3024 | Val Loss: 0.2623 | Val IoU: 0.7790 | Val Dice: 0.8697 | Val Precision: 0.8418 | Val Recall: 0.9195 | Val F-measure: 0.8697
@@ -19,6 +20,8 @@ Epoch [7/10] | Train Loss: 0.0901 | Val Loss: 0.1503 | Val IoU: 0.8014 | Val Dic
 Epoch [8/10] | Train Loss: 0.0778 | Val Loss: 0.1511 | Val IoU: 0.8037 | Val Dice: 0.8854 | Val Precision: 0.8748 | Val Recall: 0.9115 | Val F-measure: 0.8854
 Epoch [9/10] | Train Loss: 0.0679 | Val Loss: 0.1491 | Val IoU: 0.8036 | Val Dice: 0.8854 | Val Precision: 0.8802 | Val Recall: 0.9048 | Val F-measure: 0.8854
 Epoch [10/10] | Train Loss: 0.0641 | Val Loss: 0.1524 | Val IoU: 0.7980 | Val Dice: 0.8819 | Val Precision: 0.8768 | Val Recall: 0.9017 | Val F-measure: 0.8819
+
+Saved loss curve to outputs/predictions/dino_loss_curve.png
 
 Training finished.
 

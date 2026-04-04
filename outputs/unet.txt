@@ -3,31 +3,36 @@ Matched pairs: 1000
 Train samples: 700
 Val samples: 150
 Test samples: 150
-Epoch [1/10] | Train Loss: 0.5261 | Val Loss: 0.5449 | Val IoU: 0.1803 | Val Dice: 0.2565 | Val Precision: 0.5315 | Val Recall: 0.2357 | Val F-measure: 0.2565
+Epoch [1/10] | Train Loss: 0.5200 | Val Loss: 0.4639 | Val IoU: 0.3154 | Val Dice: 0.4361 | Val Precision: 0.5710 | Val Recall: 0.4504 | Val F-measure: 0.4361
 Saved best model to outputs/checkpoints/unet_best_model.pth
-Epoch [2/10] | Train Loss: 0.4756 | Val Loss: 0.4315 | Val IoU: 0.3500 | Val Dice: 0.4799 | Val Precision: 0.5729 | Val Recall: 0.5257 | Val F-measure: 0.4799
+Epoch [2/10] | Train Loss: 0.4215 | Val Loss: 0.4257 | Val IoU: 0.4224 | Val Dice: 0.5700 | Val Precision: 0.6194 | Val Recall: 0.6513 | Val F-measure: 0.5700
 Saved best model to outputs/checkpoints/unet_best_model.pth
-Epoch [3/10] | Train Loss: 0.4031 | Val Loss: 0.4927 | Val IoU: 0.4465 | Val Dice: 0.6006 | Val Precision: 0.5344 | Val Recall: 0.8064 | Val F-measure: 0.6006
+Epoch [3/10] | Train Loss: 0.4013 | Val Loss: 0.4015 | Val IoU: 0.4011 | Val Dice: 0.5438 | Val Precision: 0.6586 | Val Recall: 0.5567 | Val F-measure: 0.5438
+Epoch [4/10] | Train Loss: 0.3927 | Val Loss: 0.5026 | Val IoU: 0.4213 | Val Dice: 0.5731 | Val Precision: 0.4896 | Val Recall: 0.8260 | Val F-measure: 0.5731
 Saved best model to outputs/checkpoints/unet_best_model.pth
-Epoch [4/10] | Train Loss: 0.3892 | Val Loss: 0.3967 | Val IoU: 0.4019 | Val Dice: 0.5457 | Val Precision: 0.6930 | Val Recall: 0.5345 | Val F-measure: 0.5457
-Epoch [5/10] | Train Loss: 0.3884 | Val Loss: 0.5519 | Val IoU: 0.3683 | Val Dice: 0.5099 | Val Precision: 0.5882 | Val Recall: 0.5734 | Val F-measure: 0.5099
-Epoch [6/10] | Train Loss: 0.3801 | Val Loss: 0.3891 | Val IoU: 0.4106 | Val Dice: 0.5505 | Val Precision: 0.6903 | Val Recall: 0.5497 | Val F-measure: 0.5505
-Epoch [7/10] | Train Loss: 0.3788 | Val Loss: 0.3895 | Val IoU: 0.4150 | Val Dice: 0.5551 | Val Precision: 0.6962 | Val Recall: 0.5477 | Val F-measure: 0.5551
-Epoch [8/10] | Train Loss: 0.3750 | Val Loss: 0.4856 | Val IoU: 0.1186 | Val Dice: 0.1807 | Val Precision: 0.6837 | Val Recall: 0.1330 | Val F-measure: 0.1807
-Epoch [9/10] | Train Loss: 0.3715 | Val Loss: 0.3802 | Val IoU: 0.4560 | Val Dice: 0.6046 | Val Precision: 0.6813 | Val Recall: 0.6388 | Val F-measure: 0.6046
+Epoch [5/10] | Train Loss: 0.3821 | Val Loss: 0.4762 | Val IoU: 0.3248 | Val Dice: 0.4552 | Val Precision: 0.6445 | Val Recall: 0.4322 | Val F-measure: 0.4552
+Epoch [6/10] | Train Loss: 0.3821 | Val Loss: 0.4246 | Val IoU: 0.3347 | Val Dice: 0.4590 | Val Precision: 0.7647 | Val Recall: 0.4045 | Val F-measure: 0.4590
+Epoch [7/10] | Train Loss: 0.3754 | Val Loss: 0.3782 | Val IoU: 0.4493 | Val Dice: 0.5938 | Val Precision: 0.6749 | Val Recall: 0.6142 | Val F-measure: 0.5938
 Saved best model to outputs/checkpoints/unet_best_model.pth
-Epoch [10/10] | Train Loss: 0.3680 | Val Loss: 0.3915 | Val IoU: 0.3152 | Val Dice: 0.4379 | Val Precision: 0.7507 | Val Recall: 0.3690 | Val F-measure: 0.4379
+Epoch [8/10] | Train Loss: 0.3693 | Val Loss: 0.4437 | Val IoU: 0.2829 | Val Dice: 0.4015 | Val Precision: 0.7179 | Val Recall: 0.3409 | Val F-measure: 0.4015
+Epoch [9/10] | Train Loss: 0.3656 | Val Loss: 0.4435 | Val IoU: 0.4889 | Val Dice: 0.6367 | Val Precision: 0.5613 | Val Recall: 0.8380 | Val F-measure: 0.6367
+Saved best model to outputs/checkpoints/unet_best_model.pth
+Epoch [10/10] | Train Loss: 0.3646 | Val Loss: 0.3878 | Val IoU: 0.3601 | Val Dice: 0.4909 | Val Precision: 0.7373 | Val Recall: 0.4302 | Val F-measure: 0.4909
+
+Saved loss curve to outputs/predictions/unet_loss_curve.png
 
 Training finished.
 
 Loading best model for final test evaluation...
 
 Final Test Results
-Test Loss: 0.3491
-Test IoU: 0.4730
-Test Dice: 0.6166
-Test Precision: 0.6547
-Test Recall: 0.6789
-Test F-measure: 0.6166
+Test Loss: 0.4588
+Test IoU: 0.4370
+Test Dice: 0.5870
+Test Precision: 0.5013
+Test Recall: 0.8543
+Test F-measure: 0.5870
+/content/Salient-Object-Segmentation/src/utils.py:29: UserWarning: Creating legend with loc="best" can be slow with large amounts of data.
+  plt.savefig(save_path, bbox_inches="tight")
 Saved Precision-Recall curve to outputs/predictions/unet_pr_curve.png
-PR AUC: 0.6680
+PR AUC: 0.6534

@@ -4,7 +4,7 @@ Train samples: 700
 Val samples: 150
 Test samples: 150
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-pytorch_model.bin: 100% 599M/599M [00:03<00:00, 156MB/s]
+pytorch_model.bin: 100% 599M/599M [00:03<00:00, 165MB/s]
 Epoch [1/10] | Train Loss: 0.5012 | Val Loss: 0.4085 | Val IoU: 0.7086 | Val Dice: 0.8190 | Val Precision: 0.7813 | Val Recall: 0.8967 | Val F-measure: 0.8190
 Saved best model to outputs/checkpoints/clip_best_model.pth
 Epoch [2/10] | Train Loss: 0.3529 | Val Loss: 0.2994 | Val IoU: 0.7338 | Val Dice: 0.8368 | Val Precision: 0.8405 | Val Recall: 0.8678 | Val F-measure: 0.8368
@@ -22,6 +22,8 @@ Epoch [8/10] | Train Loss: 0.1053 | Val Loss: 0.1918 | Val IoU: 0.7484 | Val Dic
 Saved best model to outputs/checkpoints/clip_best_model.pth
 Epoch [9/10] | Train Loss: 0.0919 | Val Loss: 0.1937 | Val IoU: 0.7452 | Val Dice: 0.8468 | Val Precision: 0.8286 | Val Recall: 0.8923 | Val F-measure: 0.8468
 Epoch [10/10] | Train Loss: 0.0830 | Val Loss: 0.1915 | Val IoU: 0.7459 | Val Dice: 0.8475 | Val Precision: 0.8426 | Val Recall: 0.8774 | Val F-measure: 0.8475
+
+Saved loss curve to outputs/predictions/clip_loss_curve.png
 
 Training finished.
 
