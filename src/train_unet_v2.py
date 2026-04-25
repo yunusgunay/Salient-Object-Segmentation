@@ -70,7 +70,7 @@ def main():
     SEED = 42
     IMAGE_SIZE = (256, 256)
     BATCH_SIZE = 16
-    NUM_EPOCHS = 50
+    NUM_EPOCHS = 100
     LEARNING_RATE = 1e-3
 
     images_dir = "data/images"
