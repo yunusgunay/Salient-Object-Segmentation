@@ -30,6 +30,23 @@ def save_pr_curve_plot(recall, precision, pr_auc,save_path: str):
     plt.close()
 
 
+# [FINAL REPORT CHANGE] Added save_results_txt to write all test metrics to a .txt file
+# so v1 and v2 results can be compared side-by-side without re-reading console logs.
+def save_results_txt(metrics: dict, loss: float, pr_auc: float, save_path: str, extra_info: str = ""):
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(save_path, "w") as f:
+        if extra_info:
+            f.write(extra_info + "\n")
+            f.write("-" * 40 + "\n")
+        f.write(f"Test Loss:      {loss:.4f}\n")
+        f.write(f"Test IoU:       {metrics['iou']:.4f}\n")
+        f.write(f"Test Dice:      {metrics['dice']:.4f}\n")
+        f.write(f"Test Precision: {metrics['precision']:.4f}\n")
+        f.write(f"Test Recall:    {metrics['recall']:.4f}\n")
+        f.write(f"Test F-measure: {metrics['f_measure']:.4f}\n")
+        f.write(f"PR AUC:         {pr_auc:.4f}\n")
+
+
 def save_loss_curve_plot(train_losses, val_losses, save_path: str):
     epochs = range(1, len(train_losses) + 1)
     plt.figure()
