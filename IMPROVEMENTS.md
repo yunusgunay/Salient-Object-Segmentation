@@ -193,3 +193,191 @@ U-Net v1 stopped at epoch 10 while still actively converging — train loss was 
 - **Data split:** 70/15/15 train/val/test, fixed seed 42 — test set is identical to v1 for fair comparison.
 - **Evaluation metrics:** IoU, Dice, Precision, Recall, F-measure, PR AUC — all unchanged.
 - **U-Net encoder/decoder depth:** Features [64, 128, 256, 512] unchanged — only the bottleneck was modified.
+
+---
+
+# CLIP, DINO, and Late Fusion Improvements — Final Report
+
+## Results Summary
+
+| Model | Loss | IoU | Dice | Precision | Recall | F-measure | PR AUC |
+|---|---|---|---|---|---|---|---|
+| CLIP v1 (baseline) | 0.1677 | 0.7458 | 0.8430 | 0.8415 | 0.8778 | 0.8430 | 0.9367 |
+| **CLIP v2 (improved)** | 0.1612 | 0.7761 | 0.8660 | 0.8532 | 0.8989 | **0.8660** | **0.9516** |
+| DINO v1 (baseline) | 0.1620 | 0.7864 | 0.8721 | 0.8627 | 0.8999 | 0.8721 | 0.9578 |
+| **DINO v2 (improved)** | 0.1427 | 0.8041 | 0.8838 | 0.8735 | 0.9106 | **0.8838** | **0.9597** |
+| **CLIP + DINO Late Fusion** | **0.1104** | **0.8221** | **0.8959** | **0.8942** | **0.9114** | **0.8959** | **0.9720** |
+
+---
+
+## CLIP v2 Changes
+
+### What was limiting CLIP v1
+
+The original CLIP segmentation training (`src/train_clip.py`) had the same training bottlenecks as earlier CNN/U-Net baselines:
+
+1. **Plain BCE loss only** — optimized pixel-wise classification, but not overlap quality directly.
+2. **No augmentation** — with 700 training images, the decoder could overfit texture/background patterns.
+3. **Short schedule (10 epochs)** — not enough steps for stable convergence with a frozen transformer encoder and trainable decoder.
+4. **No LR scheduler** — fixed LR prevents automatic fine-tuning once validation performance plateaus.
+
+---
+
+### Change 1 — BCEDice Loss
+
+**File:** `src/train_clip_v2.py` (criterion setup)  
+**Loss implementation:** `src/losses.py` — class `BCEDiceLoss`
+
+CLIP v2 replaced `BCEWithLogitsLoss` with `BCEDiceLoss(bce_weight=0.5)`, combining:
+- **BCE term** for stable pixel-level supervision
+- **Soft Dice term** to optimize region overlap directly
+
+This aligns optimization with the model-selection metric (validation Dice) rather than only per-pixel error.
+
+---
+
+### Change 2 — Train-Only Augmentation
+
+**File:** `src/train_clip_v2.py`  
+**Dataset class:** `src/dataset.py` — `AugmentedECSSDDataset`
+
+Training data uses `augment=True` with:
+1. Horizontal flip (p=0.5)
+2. Random rotation in ±15°
+3. Color jitter (image only)
+
+Validation/test remain deterministic (`augment=False`).
+
+---
+
+### Change 3 — Longer Training + Adaptive LR
+
+**File:** `src/train_clip_v2.py`
+
+CLIP v2 uses:
+- **Epochs:** 60 (vs 10)
+- **Initial LR:** 3e-4
+- **Scheduler:** `ReduceLROnPlateau(mode="max", patience=5, factor=0.5, min_lr=1e-5)` on validation Dice
+
+This gives the decoder enough time to fit segmentation boundaries while automatically reducing step size when Dice stalls.
+
+---
+
+### CLIP v2 Performance Gain
+
+From v1 to v2:
+- **Dice:** 0.8430 → 0.8660 (**+0.0230**)
+- **IoU:** 0.7458 → 0.7761 (**+0.0303**)
+- **Precision:** 0.8415 → 0.8532 (**+0.0117**)
+- **Recall:** 0.8778 → 0.8989 (**+0.0211**)
+- **PR AUC:** 0.9367 → 0.9516 (**+0.0149**)
+
+CLIP improved in both precision and recall, indicating better boundaries without sacrificing detection coverage.
+
+---
+
+## DINO v2 Changes
+
+### What was limiting DINO v1
+
+DINO v1 (`src/train_dino.py`) was already strong, but used the same conservative baseline training setup:
+
+1. BCE-only objective
+2. No augmentation
+3. 10-epoch schedule
+4. Fixed LR with no plateau adaptation
+
+Even with a stronger pretrained backbone, this setup left additional performance on the table.
+
+---
+
+### Change 1 — BCEDice Loss
+
+**File:** `src/train_dino_v2.py`  
+**Loss implementation:** `src/losses.py` — class `BCEDiceLoss`
+
+DINO v2 also uses `BCEDiceLoss(bce_weight=0.5)` so overlap quality is directly optimized during training.
+
+---
+
+### Change 2 — Train-Only Augmentation
+
+**File:** `src/train_dino_v2.py`  
+**Dataset class:** `src/dataset.py` — `AugmentedECSSDDataset`
+
+Same augmentation policy as CLIP v2 (flip, ±15° rotation, color jitter) with deterministic val/test.
+
+---
+
+### Change 3 — Longer Training + Adaptive LR
+
+**File:** `src/train_dino_v2.py`
+
+DINO v2 uses:
+- **Epochs:** 60 (vs 10)
+- **Initial LR:** 3e-4
+- **Scheduler:** `ReduceLROnPlateau(mode="max", patience=5, factor=0.5, min_lr=1e-5)`
+
+This improves stability and allows fine-grained convergence after the first high-learning phase.
+
+---
+
+### DINO v2 Performance Gain
+
+From v1 to v2:
+- **Dice:** 0.8721 → 0.8838 (**+0.0117**)
+- **IoU:** 0.7864 → 0.8041 (**+0.0177**)
+- **Precision:** 0.8627 → 0.8735 (**+0.0108**)
+- **Recall:** 0.8999 → 0.9106 (**+0.0107**)
+- **PR AUC:** 0.9578 → 0.9597 (**+0.0019**)
+
+Improvements are smaller than CLIP (because DINO started higher), but consistently positive across all key metrics.
+
+---
+
+## Late Fusion (CLIP + DINO)
+
+### Change — Weighted Logit Fusion with Validation Search
+
+**File:** `src/eval_late_fusion.py`
+
+Instead of using a single model output, late fusion combines both model logits per pixel:
+
+```
+fused_logits = w_dino * logits_dino + (1 - w_dino) * logits_clip
+```
+
+Then the script performs validation-time search over:
+1. **Fusion weight** (`w_dino`) from 0.50 to 0.95
+2. **Binarization threshold** from 0.30 to 0.70
+
+Best validation setting found:
+- `weight_dino = 0.50`
+- `threshold = 0.57`
+- `val_dice = 0.9069`
+
+This means equal contribution from both models gave the best validation overlap after threshold tuning.
+
+---
+
+### Late Fusion Performance Gain
+
+Compared with best single model (DINO v2):
+- **Dice:** 0.8838 → 0.8959 (**+0.0121**)
+- **IoU:** 0.8041 → 0.8221 (**+0.0180**)
+- **Precision:** 0.8735 → 0.8942 (**+0.0207**)
+- **Recall:** 0.9106 → 0.9114 (**+0.0008**)
+- **PR AUC:** 0.9597 → 0.9720 (**+0.0123**)
+- **Loss:** 0.1427 → 0.1104 (**-0.0323**)
+
+The strongest gain is precision, while recall remains high, indicating the fused model reduces false positives without losing salient objects.
+
+---
+
+## What Did Not Change (CLIP/DINO/Fusion)
+
+- **Backbone architecture:** `CLIPSegmenter` and `DINOSegmenter` encoders and decoders were unchanged.
+- **Encoder freezing policy:** both v2 runs kept `freeze_encoder=True`.
+- **Split protocol:** same fixed 70/15/15 split with seed 42.
+- **Model selection criterion:** best checkpoint still selected on validation Dice.
+- **Evaluation metrics:** identical metric suite (IoU, Dice, Precision, Recall, F-measure, PR AUC).

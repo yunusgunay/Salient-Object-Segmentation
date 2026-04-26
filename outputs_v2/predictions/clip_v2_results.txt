@@ -1,0 +1,9 @@
+Model: CLIP v2 (BCEDice + augmentation + scheduler, frozen encoder)
+----------------------------------------
+Test Loss:      0.1612
+Test IoU:       0.7761
+Test Dice:      0.8660
+Test Precision: 0.8532
+Test Recall:    0.8989
+Test F-measure: 0.8660
+PR AUC:         0.9516
