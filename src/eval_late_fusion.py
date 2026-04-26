@@ -36,12 +36,12 @@ def compute_metrics_from_logits(logits, targets, threshold):
     probs = torch.sigmoid(logits)
     preds = (probs > threshold).float()
 
-    preds = preds.view(preds.size(0), -1)
-    targets = targets.view(targets.size(0), -1)
+    preds_flat = preds.view(preds.size(0), -1)
+    targets_flat = targets.view(targets.size(0), -1)
 
-    tp = (preds * targets).sum(dim=1)
-    fp = (preds * (1 - targets)).sum(dim=1)
-    fn = ((1 - preds) * targets).sum(dim=1)
+    tp = (preds_flat * targets_flat).sum(dim=1)
+    fp = (preds_flat * (1 - targets_flat)).sum(dim=1)
+    fn = ((1 - preds_flat) * targets_flat).sum(dim=1)
 
     iou = _safe_divide(tp, tp + fp + fn)
     dice = _safe_divide(2 * tp, 2 * tp + fp + fn)
