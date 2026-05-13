@@ -49,5 +49,4 @@ We utilized frozen encoders to prevent overfitting on our small dataset (700 tra
 ## Environment and Tools
 * **Framework**: Python, PyTorch.
 * **Libraries**: `timm` (for ViT encoders), `torchvision`, `scikit-learn`, `matplotlib`.
-* 
-**Hardware**: Trained on Google Colab using NVIDIA GPU acceleration.
+* **Hardware**: Trained on Google Colab using NVIDIA GPU acceleration.
