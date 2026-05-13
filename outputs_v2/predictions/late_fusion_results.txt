@@ -1,0 +1,10 @@
+Model: CLIP+DINO Late Fusion (weighted logit average)
+Selected on validation: weight_dino=0.50, threshold=0.57, val_dice=0.9069
+----------------------------------------
+Test Loss:      0.1104
+Test IoU:       0.8221
+Test Dice:      0.8959
+Test Precision: 0.8942
+Test Recall:    0.9114
+Test F-measure: 0.8959
+PR AUC:         0.9720

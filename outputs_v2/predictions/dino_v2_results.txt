@@ -1,0 +1,9 @@
+Model: DINO v2 (BCEDice + augmentation + scheduler, frozen encoder)
+----------------------------------------
+Test Loss:      0.1427
+Test IoU:       0.8041
+Test Dice:      0.8838
+Test Precision: 0.8735
+Test Recall:    0.9106
+Test F-measure: 0.8838
+PR AUC:         0.9597
