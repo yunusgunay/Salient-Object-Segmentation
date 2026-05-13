@@ -1,6 +1,6 @@
 # From Scratch to Pretrained: Salient Object Segmentation
 
-This project investigates the performance of various deep learning architectures, ranging from simple from-scratch models to advanced pretrained Vision Transformers - on the task of identifying visually prominent objects in complex natural scenes. Using the Extended Complex Scene Saliency Dataset (ECSSD), we implemented and iteratively improved four major approaches to understand how architectural choices and training methodologies impact segmentation quality.
+This project investigates the performance of various deep learning architectures, ranging from simple from-scratch models to advanced pretrained Vision Transformers on the task of identifying visually prominent objects in complex natural scenes. Using the Extended Complex Scene Saliency Dataset (ECSSD), we implemented and iteratively improved four major approaches to understand how architectural choices and training methodologies impact segmentation quality.
 
 ## Project Overview
 
@@ -12,14 +12,14 @@ Our experiments were conducted in two rounds: a **v1 Baseline** to establish ini
 
 ### From-Scratch Models
 
-* **CNN-Based Autoencoder**:
+**CNN-Based Autoencoder**:
 * **v1 Baseline**: A simple three-stage encoder-decoder. It suffered from "class imbalance collapse," where the model only predicted background pixels.
 
 * **v2 Improvements**: We implemented **skip connections** to pass high-resolution spatial detail directly to the decoder. We also added **batch normalization** for stability and switched to **BCEDice loss** to handle class imbalance.
 
 * **Result**: Performance improved from an F-measure of 0.10 to 0.59.
 
-* **U-Net**:
+**U-Net**:
 * **v1 Baseline**: Already utilized skip connections, yielding strong recall (0.85) from the first epoch but suffering from over-segmentation.
 * **v2 Improvements**: We added **Spatial Dropout (p=0.3)** after the bottleneck to regularize the model and prevent it from memorizing the small training set.
 * **Result**: Achieved a more stable and generalizable F-measure of 0.79.
