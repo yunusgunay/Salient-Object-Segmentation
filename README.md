@@ -1,6 +1,6 @@
 # From Scratch to Pretrained: Salient Object Segmentation
 
-This project investigates the performance of various deep learning architectures—ranging from simple from-scratch models to advanced pretrained Vision Transformers - on the task of identifying visually prominent objects in complex natural scenes. Using the Extended Complex Scene Saliency Dataset (ECSSD), we implemented and iteratively improved four major approaches to understand how architectural choices and training methodologies impact segmentation quality.
+This project investigates the performance of various deep learning architectures, ranging from simple from-scratch models to advanced pretrained Vision Transformers - on the task of identifying visually prominent objects in complex natural scenes. Using the Extended Complex Scene Saliency Dataset (ECSSD), we implemented and iteratively improved four major approaches to understand how architectural choices and training methodologies impact segmentation quality.
 
 ## Project Overview
 
